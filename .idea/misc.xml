@@ -3,7 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/lxc/Desktop/PalmprintDestiny/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/lxc/Desktop/PalmprintDestiny/app/src/main/res/layout/activity_main.xml" value="0.5" />
+        <entry key="..\:/Users/lxc/Desktop/PalmprintDestiny/app/src/main/res/layout/activity_second.xml" value="0.34270833333333334" />
+        <entry key="..\:/Users/lxc/Desktop/PalmprintDestiny/app/src/main/res/layout/title_bar.xml" value="0.34270833333333334" />
         <entry key="..\:/Users/lxc/Desktop/PalmprintDestiny/app/src/main/res/xml/file_paths.xml" value="0.2651975683890577" />
         <entry key="..\:/Users/lxc/Desktop/PalmprintDestiny/app/src/main/res/xml/network_security_config.xml" value="0.34270833333333334" />
       </map>

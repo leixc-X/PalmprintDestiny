@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.core.content.FileProvider
 import com.palmprintdestiny.android.logic.Repository
 import com.palmprintdestiny.android.logic.model.DestinyResponse
@@ -25,6 +27,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
+import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
@@ -70,24 +73,6 @@ class MainActivity : AppCompatActivity() {
             startActivityForResult(intent, fromAlbum)
         }
 
-//        sendData.setOnClickListener {
-//            val desService = ServiceCreator.create(DestinyService::class.java)
-//            val image = "https://i.postimg.cc/c4WYYVxD/9d4abd46b8e4b21758be22422d8bb31.jpg"
-//            val imageType = "1"
-//            desService.uploadPic(image, imageType).enqueue(object :Callback<DestinyResponse>{
-//                override fun onFailure(call: Call<DestinyResponse>, t: Throwable) {
-//                    t.printStackTrace()
-//                }
-//
-//                override fun onResponse(call: Call<DestinyResponse>, response: Response<DestinyResponse>) {
-//                    val des = response.body()
-//                    if (des != null) {
-////                        infoTv.text = "${tel.result.province}   ${tel.result.city}"
-//                        Log.d("MainActivity", "data is ${des.命主手相分析与解读状态}")
-//                    }
-//                }
-//            })
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -115,22 +100,69 @@ class MainActivity : AppCompatActivity() {
                         Log.d("MainActivity", "bitmap is ${bitmap}")
                         imageView.setImageBitmap((bitmap))
 
+                        hidden_Components()
+
                         val imageString1 = Base64Util.getBitmapStrBase64(bitmap).toString()
                         Log.d("MainActivity", "imageString is ${imageString1}")
-                        sendData.setOnClickListener {
+                        sendDataBtn.setOnClickListener {
                             val desService = ServiceCreator.create(DestinyService::class.java)
                             val image = "https://i.postimg.cc/c4WYYVxD/9d4abd46b8e4b21758be22422d8bb31.jpg"
                             val imageType = "0"
+                            val intent = Intent(this, SecondActivity::class.java)
                             desService.uploadPic(imageString1, imageType).enqueue(object :Callback<DestinyResponse>{
                                 override fun onFailure(call: Call<DestinyResponse>, t: Throwable) {
+                                    Toast.makeText(PalmprintDestinyApplication.context, "请求超时，请重新点击按钮", Toast.LENGTH_SHORT).show()
                                     t.printStackTrace()
                                 }
 
                                 override fun onResponse(call: Call<DestinyResponse>, response: Response<DestinyResponse>) {
                                     val des = response.body()
+                                    val bundle = Bundle()
                                     if (des != null) {
+                                        if ( des.命主手相分析与解读状态 == "艾科瑞特，让企业业绩长青"){
+                                            bundle.putString("palmName", des.命主手相实体信息.命主手相掌型实体信息.掌型名称)
+                                            bundle.putString("wuxing", des.命主手相实体信息.命主手相掌型实体信息.掌型五行名称)
+                                            bundle.putString("palmInterpretation", des.命主手相实体信息.命主手相掌型实体信息.掌型解读)
+
+                                            bundle.putString("xueye_geju", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.学业.格局)
+                                            bundle.putString("xueye_weixie", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.学业.威胁与挑战)
+                                            bundle.putString("xueye_yicongshi", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.学业.宜从事)
+                                            bundle.putString("xueye_youliyu", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.学业.有利于)
+
+                                            bundle.putString("shiye_geju", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.事业.格局)
+                                            bundle.putString("shiye_weixie", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.事业.威胁与挑战)
+                                            bundle.putString("shiye_yicongshi", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.事业.宜从事)
+                                            bundle.putString("shiye_youliyu", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.事业.有利于)
+
+                                            bundle.putString("caiyun_geju", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.财运.格局)
+                                            bundle.putString("caiyun_weixie", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.财运.威胁与挑战)
+                                            bundle.putString("caiyun_yicongshi", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.财运.宜从事)
+                                            bundle.putString("caiyun_youliyu", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.财运.有利于)
+
+                                            bundle.putString("jiankang_geju", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.健康.格局)
+                                            bundle.putString("jiankang_weixie", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.健康.威胁与挑战)
+                                            bundle.putString("jiankang_yicongshi", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.健康.宜从事)
+                                            bundle.putString("jiankang_youliyu", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.健康.有利于)
+
+                                            bundle.putString("jiating_geju", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.家庭.格局)
+                                            bundle.putString("jiating_weixie", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.家庭.威胁与挑战)
+                                            bundle.putString("jiating_yicongshi", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.家庭.宜从事)
+                                            bundle.putString("jiating_youliyu", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.家庭.有利于)
+
+                                            bundle.putString("hunyin_geju", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.婚姻.格局)
+                                            bundle.putString("hunyin_weixie", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.婚姻.威胁与挑战)
+                                            bundle.putString("hunyin_yicongshi", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.婚姻.宜从事)
+                                            bundle.putString("hunyin_youliyu", des.命主手相实体信息.命主手相掌型实体信息.掌型命理解读.婚姻.有利于)
+
+                                            intent.putExtras(bundle)
+
+                                            startActivity(intent)
+                                        }else{
+                                            Toast.makeText(PalmprintDestinyApplication.context, "请求失败，请重新点击一下按钮", Toast.LENGTH_SHORT).show()
+                                        }
+
 //                        infoTv.text = "${tel.result.province}   ${tel.result.city}"
-                                        Log.d("MainActivity", "data is ${des.命主手相分析与解读状态}")
+//                                        Log.d("MainActivity", "data is ${des.命主手相分析与解读状态}")
                                     }
                                 }
                             })
@@ -139,6 +171,17 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun hidden_Components(){
+        takePhotoBtn.visibility = View.GONE
+        fromAlbumBtn.visibility = View.GONE
+        titleView1.visibility = View.GONE
+        titleView2.visibility = View.GONE
+        titleView3.visibility = View.GONE
+        simpleView.visibility = View.GONE
+        sendDataBtn.visibility = View.VISIBLE
+
     }
 
     private fun rotateIfRequired(bitmap: Bitmap): Bitmap {

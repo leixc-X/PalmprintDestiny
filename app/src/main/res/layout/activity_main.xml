@@ -3,24 +3,57 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+    <include layout="@layout/title_bar"></include>
+
+    <TextView
+        android:id="@+id/titleView1"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:text="拍照/上传"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/titleView2"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:text="选择相机或者打开系统相册"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="10sp" />
+
+    <ImageView
+        android:id="@+id/simpleView"
+        android:layout_width="216dp"
+        android:layout_height="256dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/simple" />
+
+    <TextView
+        android:id="@+id/titleView3"
+        android:layout_width="wrap_content"
+        android:layout_height="39dp"
+        android:text="为了保证结果准确，请尽量保持手掌正面完整无遮挡，背景纯色"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textSize="10sp" />
 
     <Button
         android:id="@+id/takePhotoBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Take Photo" />
+        android:text="拍照" />
 
     <Button
         android:id="@+id/fromAlbumBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="From Album" />
+        android:text="相册" />
 
     <Button
-        android:id="@+id/sendData"
+        android:id="@+id/sendDataBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="send Data" />
+        android:visibility="invisible"
+        android:text="一键生成手相报告" />
 
     <ImageView
         android:id="@+id/imageView"
