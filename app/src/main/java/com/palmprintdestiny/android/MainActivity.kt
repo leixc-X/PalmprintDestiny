@@ -158,7 +158,7 @@ class MainActivity : AppCompatActivity() {
 
                                             startActivity(intent)
                                         }else{
-                                            Toast.makeText(PalmprintDestinyApplication.context, "请求失败，请重新点击一下按钮", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(PalmprintDestinyApplication.context, "请求失败，请重新点击一下按钮${des.命主手相分析与解读状态}", Toast.LENGTH_SHORT).show()
                                         }
 
 //                        infoTv.text = "${tel.result.province}   ${tel.result.city}"
